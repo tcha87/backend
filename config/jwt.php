@@ -136,6 +136,8 @@ return [
 
     'algo' => env('JWT_ALGO', 'HS256'),
 
+    'user' => App\Models\Customer::class,
+
     /*
     |--------------------------------------------------------------------------
     | Required Claims

@@ -43,7 +43,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'jwt',
+            'driver'   => 'session',
             'provider' => 'customers',
         ],
     ],
@@ -71,10 +71,10 @@ return [
             'model' => App\User::class,
         ],
 
-         'customers' => [
-         'driver' => 'eloquent',
-         'model' => App\Customer::class,  
-         ],
+        'customers' => [
+            'driver' => 'eloquent',
+            'model'  => App\Customer::class,
+        ],
     ],
 
     /*
