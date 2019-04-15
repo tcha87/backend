@@ -6,6 +6,7 @@ use DB;
 use JWTAuth;
 use Hash;
 use Validator;
+use Config;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -31,6 +32,8 @@ class AuthController extends Controller
             config()->set( 'auth.defaults.guard', 'api' );
 
             try {
+
+              config()->set( 'auth.defaults.guard', 'api' );
                 if (! $token = JWTAuth::attempt($credentials)) {
                     return response()->json(['error' => 'invalid_credentials'], 400);
                 }
@@ -38,12 +41,17 @@ class AuthController extends Controller
                 return response()->json(['error' => 'could_not_create_token'], 500);
             }
 
-            return response()->json(compact('token'));
+            $user = JWTAuth::user();
+  
+             return response()->json(compact('token', 'user'));
         }
 
         public function getAuthenticatedUser()
     {
+
                     try {
+
+                    config()->set( 'auth.defaults.guard', 'api' );
 
                             if (! $user = JWTAuth::parseToken()->authenticate()) {
                                     return response()->json(['user_not_found'], 404);
@@ -63,13 +71,13 @@ class AuthController extends Controller
 
                     }
 
-                  
+
 
                     return response()->json(compact('user'));
-            
+
     }
-    
-    public function logout(Request $request) 
+
+    public function logout(Request $request)
     {
         $token = $request->input('token');
 
@@ -77,13 +85,13 @@ class AuthController extends Controller
         try {
             JWTAuth::invalidate($token);
             return response()->json([
-                'status' => 'success', 
+                'status' => 'success',
                 'message'=> "User successfully logged out."
             ]);
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
             return response()->json([
-              'status' => 'error', 
+              'status' => 'error',
               'message' => 'Failed to logout, please try again.'
             ], 500);
         }
@@ -100,7 +108,7 @@ class AuthController extends Controller
             throw new AccessDeniedHttpException('The token is invalid');
         }
         return response()->json([
-            'status' => 'success', 
+            'status' => 'success',
             'data'=> [
                 'token' => $token
             ]

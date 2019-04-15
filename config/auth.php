@@ -43,7 +43,7 @@ return [
         ],
 
         'api' => [
-            'driver'   => 'session',
+            'driver'   => 'jwt',
             'provider' => 'customers',
         ],
     ],

@@ -136,7 +136,7 @@ return [
 
     'algo' => env('JWT_ALGO', 'HS256'),
 
-    'user' => App\Models\Customer::class,
+    'user' => App\Customer::class,
 
     /*
     |--------------------------------------------------------------------------
